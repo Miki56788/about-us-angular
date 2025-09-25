@@ -1,0 +1,50 @@
+.about-page {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+  }
+  
+  h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #4a148c;
+  }
+  
+  .subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  hr {
+    margin: 2rem 0;
+    border: none;
+    height: 2px;
+    background: linear-gradient(to right, #ff6f61, #ab47bc);
+  }
+  
+  .contacts h2 {
+    font-size: 1.5rem;
+    color: #2e7d32;
+  }
+  
+  .contacts ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .contacts li {
+    margin: 0.5rem 0;
+  }
+  
+  .contacts a {
+    color: #1565c0;
+    text-decoration: none;
+  }
+  
+  .contacts a:hover {
+    text-decoration: underline;
+  }
+  
