@@ -1,15 +1,50 @@
 <main class="about-page">
-  <h1>✨ About Us ✨</h1>
-  <p class="subtitle">Мы учим Angular и делаем проекты 🚀</p>
+  <!-- 1) Интерполяция -->
+  <h1>✨ {{ title }} ✨</h1>
+  <p class="subtitle">{{ mission }}</p>
 
   <hr />
 
+  <!-- 2) Привязка свойств: картинка + условный класс по лайкам -->
+  <section class="section">
+    <h2>👥 Our Team</h2>
+    <img class="team" [src]="photoUrl" alt="Our team photo" />
+    <p [class.highlight]="likes >= 5">Likes: {{ likes }}</p>
+  </section>
+
+  <!-- 3) Привязка событий: Like + Toggle -->
+  <section class="section">
+    <button (click)="like()">👍 Like</button>
+    <button (click)="toggle()">Toggle message</button>
+    <p *ngIf="showThanks">Thank you for visiting!</p>
+  </section>
+
+  <!-- 4) Двухсторонняя привязка -->
+  <section class="section">
+    <label>Your name:
+      <input [(ngModel)]="name" placeholder="Enter your name" />
+    </label>
+    <p *ngIf="name">Hello, {{ name }}!</p>
+  </section>
+
+  <section class="section">
+    <label>Email:
+      <input [(ngModel)]="email" placeholder="Leave your email" />
+    </label>
+    <button (click)="subscribe()" [disabled]="!emailValid">Subscribe</button>
+    <p *ngIf="subscribed">Thanks, {{ email }}, we'll be in touch!</p>
+  </section>
+
+  <!-- Твои контакты, но теперь через биндинги [href]/интерполяцию -->
   <section class="contacts">
     <h2>📬 Contacts</h2>
     <ul>
-      <li><strong>Email:</strong> <a href="mailto:you@example.com">you@example.com</a></li>
-      <li><strong>Telegram:</strong> <a href="https://t.me/your_handle" target="_blank">@your_handle</a></li>
-      <li><strong>GitHub:</strong> <a href="https://github.com/your-username" target="_blank">github.com/your-username</a></li>
+      <li><strong>Email:</strong> <a [href]="'mailto:' + contactEmail">{{ contactEmail }}</a></li>
+      <li><strong>Telegram:</strong> <a [href]="telegramUrl" target="_blank">{{ telegramHandle }}</a></li>
+      <li><strong>GitHub:</strong> <a [href]="githubUrl" target="_blank">{{ githubUrl }}</a></li>
     </ul>
   </section>
+  
+  <app-movies-list></app-movies-list>
+
 </main>

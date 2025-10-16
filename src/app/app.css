@@ -47,4 +47,36 @@
   .contacts a:hover {
     text-decoration: underline;
   }
-  
+  /* блоки секций, чтобы был воздух */
+.section {
+  margin: 1.25rem 0;
+}
+
+/* подсветка для лайков при likes >= 5 */
+.highlight {
+  background: #fff4c2;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+/* картинка команды */
+img.team {
+  max-width: 320px;
+  display: block;
+  margin: 12px 0;
+  border-radius: 10px;
+}
+
+/* кнопочки */
+button {
+  margin-right: 10px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #4a148c;
+  color: #fff;
+  cursor: pointer;
+}
+button:hover {
+  opacity: 0.9;
+}

@@ -1,0 +1,9 @@
+<h1 style="color: red;">TEST FROM MOVIES LIST 🔥</h1>
+
+<button (click)="loadMovies()">Load Movies</button>
+
+<ul>
+  <li *ngFor="let movie of movies">
+    {{ movie.title }}
+  </li>
+</ul>
