@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MoviesService } from '../movies.service';
+import { Subject, debounceTime, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-movies-list',
@@ -11,22 +12,30 @@ import { MoviesService } from '../movies.service';
 })
 export class MoviesListComponent {
   movies: any[] = [];
+  private searchSubject = new Subject<string>();
 
-  constructor(private moviesService: MoviesService) {}
-
-  loadMovies() {
-    console.log('✅ LoadMovies clicked!');
-    this.moviesService.getMovies().subscribe({
+  constructor(private moviesService: MoviesService) {
+    this.searchSubject.pipe(
+      debounceTime(500),
+      switchMap((query) => this.moviesService.searchMovies(query))
+    ).subscribe({
       next: (data) => {
-        console.log('✅ Movies loaded:', data);
-        // если API вернул объект, достаем из него массив
-        this.movies = Array.isArray(data) ? data : data.results || data.items || [];
-        console.log('✅ Parsed movies array:', this.movies);
+        this.movies = Array.isArray(data) ? data : data.results || [];
       },
-      error: (err) => {
-        console.error('❌ Error loading movies:', err);
-      }
+      error: (err) => console.error('Search error:', err)
     });
   }
-  
+
+  loadMovies() {
+    this.moviesService.getMovies().subscribe({
+      next: (data) => {
+        this.movies = Array.isArray(data) ? data : data.results || [];
+      },
+      error: (err) => console.error('Error loading movies:', err)
+    });
+  }
+
+  onSearch(query: string) {
+    this.searchSubject.next(query);
+  }
 }

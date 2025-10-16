@@ -12,4 +12,9 @@ export class MoviesService {
     return this.http.get('https://ghibliapi.vercel.app/films');
   }
   
+  searchMovies(query: string): Observable<any> {
+    return this.http.get(`https://ghibliapi.vercel.app/films?title=${query}`);
+  }
+  
+  
 }

@@ -1,5 +1,12 @@
 <h1 style="color: red;">TEST FROM MOVIES LIST 🔥</h1>
 
+<input
+  type="text"
+  placeholder="Search movie..."
+  (input)="onSearch($event.target.value)"
+  class="search-box"
+/>
+
 <button (click)="loadMovies()">Load Movies</button>
 
 <ul>
