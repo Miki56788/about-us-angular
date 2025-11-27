@@ -1,50 +1,77 @@
 <main class="about-page">
-  <!-- 1) Интерполяция -->
-  <h1>✨ {{ title }} ✨</h1>
-  <p class="subtitle">{{ mission }}</p>
+  <!-- 1) Заголовок сервиса -->
+  <h1>🎬 {{ title }} – Online Cinema</h1>
+  <p class="subtitle">
+    {{ mission }} Watch legendary Studio Ghibli movies in one place.
+  </p>
 
   <hr />
 
-  <!-- 2) Привязка свойств: картинка + условный класс по лайкам -->
+  <!-- 2) Блок о команде / сервисе -->
   <section class="section">
-    <h2>👥 Our Team</h2>
+    <h2>👥 Who is behind this?</h2>
     <img class="team" [src]="photoUrl" alt="Our team photo" />
-    <p [class.highlight]="likes >= 5">Likes: {{ likes }}</p>
+    <p [class.highlight]="likes >= 5">
+      Fans like this project: {{ likes }} ❤
+    </p>
   </section>
 
-  <!-- 3) Привязка событий: Like + Toggle -->
+  <!-- 3) Лайк + сообщение -->
   <section class="section">
+    <h2>👍 Support the project</h2>
+    <p>Click like if you enjoy discovering new movies online.</p>
     <button (click)="like()">👍 Like</button>
     <button (click)="toggle()">Toggle message</button>
-    <p *ngIf="showThanks">Thank you for visiting!</p>
+    <p *ngIf="showThanks">Thank you for watching with us!</p>
   </section>
 
-  <!-- 4) Двухсторонняя привязка -->
+  <!-- 4) Имя пользователя -->
   <section class="section">
+    <h2>🙋 Viewer profile</h2>
     <label>Your name:
       <input [(ngModel)]="name" placeholder="Enter your name" />
     </label>
-    <p *ngIf="name">Hello, {{ name }}!</p>
+    <p *ngIf="name">Welcome to the cinema, {{ name }}!</p>
   </section>
 
+  <!-- 5) Подписка на новости -->
   <section class="section">
+    <h2>📨 Get new movies first</h2>
     <label>Email:
       <input [(ngModel)]="email" placeholder="Leave your email" />
     </label>
-    <button (click)="subscribe()" [disabled]="!emailValid">Subscribe</button>
-    <p *ngIf="subscribed">Thanks, {{ email }}, we'll be in touch!</p>
+    <button (click)="subscribe()" [disabled]="!emailValid">
+      Subscribe
+    </button>
+    <p *ngIf="subscribed">
+      Thanks, {{ email }}, we will send you updates about new films!
+    </p>
   </section>
 
-  <!-- Твои контакты, но теперь через биндинги [href]/интерполяцию -->
+  <!-- 6) Контакты сервиса -->
   <section class="contacts">
     <h2>📬 Contacts</h2>
     <ul>
-      <li><strong>Email:</strong> <a [href]="'mailto:' + contactEmail">{{ contactEmail }}</a></li>
-      <li><strong>Telegram:</strong> <a [href]="telegramUrl" target="_blank">{{ telegramHandle }}</a></li>
-      <li><strong>GitHub:</strong> <a [href]="githubUrl" target="_blank">{{ githubUrl }}</a></li>
+      <li>
+        <strong>Email:</strong>
+        <a [href]="'mailto:' + contactEmail">{{ contactEmail }}</a>
+      </li>
+      <li>
+        <strong>Telegram:</strong>
+        <a [href]="telegramUrl" target="_blank">{{ telegramHandle }}</a>
+      </li>
+      <li>
+        <strong>GitHub:</strong>
+        <a [href]="githubUrl" target="_blank">{{ githubUrl }}</a>
+      </li>
     </ul>
   </section>
-  
-  <app-movies-list></app-movies-list>
 
+  <!-- 7) Секция с фильмами из NgRx + API -->
+  <section class="section">
+    <h2>🍿 Now streaming</h2>
+    <p>Search and browse Studio Ghibli movies from our catalog.</p>
+
+    <app-movies-list></app-movies-list>
+  </section>
 </main>

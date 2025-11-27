@@ -1,7 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MoviesService } from '../movies.service';
-import { Subject, debounceTime, switchMap } from 'rxjs';
+import { Subject, debounceTime, Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+
+import * as MoviesActions from './state/movies.actions';
+import {
+  selectMoviesList,
+  selectMoviesLoading,
+  selectMoviesError
+} from './state/movies.selectors';
 
 @Component({
   selector: 'app-movies-list',
@@ -10,29 +17,28 @@ import { Subject, debounceTime, switchMap } from 'rxjs';
   templateUrl: './movies-list.html',
   styleUrls: ['./movies-list.css']
 })
-export class MoviesListComponent {
-  movies: any[] = [];
-  private searchSubject = new Subject<string>();
+export class MoviesListComponent implements OnInit, OnDestroy {
+  movies$ = this.store.select(selectMoviesList);
+  loading$ = this.store.select(selectMoviesLoading);
+  error$ = this.store.select(selectMoviesError);
 
-  constructor(private moviesService: MoviesService) {
-    this.searchSubject.pipe(
-      debounceTime(500),
-      switchMap((query) => this.moviesService.searchMovies(query))
-    ).subscribe({
-      next: (data) => {
-        this.movies = Array.isArray(data) ? data : data.results || [];
-      },
-      error: (err) => console.error('Search error:', err)
-    });
+  private searchSubject = new Subject<string>();
+  private searchSub?: Subscription;
+
+  constructor(private store: Store) {
+    this.searchSub = this.searchSubject
+      .pipe(debounceTime(500))
+      .subscribe(query => {
+        this.store.dispatch(MoviesActions.loadMovies({ query }));
+      });
   }
 
-  loadMovies() {
-    this.moviesService.getMovies().subscribe({
-      next: (data) => {
-        this.movies = Array.isArray(data) ? data : data.results || [];
-      },
-      error: (err) => console.error('Error loading movies:', err)
-    });
+  ngOnInit(): void {
+    this.store.dispatch(MoviesActions.loadMovies({}));
+  }
+
+  ngOnDestroy(): void {
+    this.searchSub?.unsubscribe();
   }
 
   onSearch(query: string) {

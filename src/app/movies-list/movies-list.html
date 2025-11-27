@@ -1,16 +1,26 @@
-<h1 style="color: red;">TEST FROM MOVIES LIST 🔥</h1>
+<div class="search">
+  <input
+    type="text"
+    placeholder="Search by title"
+    (input)="onSearch($event.target.value)"
+  />
+</div>
 
-<input
-  type="text"
-  placeholder="Search movie..."
-  (input)="onSearch($event.target.value)"
-  class="search-box"
-/>
+<!-- Показать, что идёт загрузка -->
+<div *ngIf="loading$ | async" class="loading">
+  Loading...
+</div>
 
-<button (click)="loadMovies()">Load Movies</button>
+<!-- Ошибка, если что-то пошло не так -->
+<div *ngIf="(error$ | async) as error" class="error">
+  Error: {{ error }}
+</div>
 
-<ul>
-  <li *ngFor="let movie of movies">
-    {{ movie.title }}
+<!-- САМ СПИСОК ФИЛЬМОВ -->
+<ul class="movies">
+  <li *ngFor="let movie of (movies$ | async)" class="movie">
+    <h3>{{ movie.title }}</h3>
+    <p>{{ movie.description }}</p>
+    <small>Release date: {{ movie.release_date }}</small>
   </li>
 </ul>

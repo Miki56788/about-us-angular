@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 export class AppComponent {
   // 1) Интерполяция
   title = 'About Us';
-  mission = 'Мы учим Angular и делаем проекты 🚀';
+  mission = ' 🚀';
 
   // 2) Property binding
   photoUrl = 'https://picsum.photos/400/250'; // или 'assets/team.jpg'

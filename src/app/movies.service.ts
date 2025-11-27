@@ -6,15 +6,30 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MoviesService {
+  private baseUrl = 'https://ghibliapi.vercel.app/films';
+
   constructor(private http: HttpClient) {}
 
-  getMovies(): Observable<any> {
-    return this.http.get('https://ghibliapi.vercel.app/films');
+  // === методы под задание (items) ===
+
+  getItems(query?: string): Observable<any[]> {
+    if (query && query.trim().length > 0) {
+      return this.http.get<any[]>(`${this.baseUrl}?title=${query}`);
+    }
+    return this.http.get<any[]>(this.baseUrl);
   }
-  
-  searchMovies(query: string): Observable<any> {
-    return this.http.get(`https://ghibliapi.vercel.app/films?title=${query}`);
+
+  getItemById(id: string | number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/${id}`);
   }
-  
-  
+
+  // === старые методы, чтобы ничего не сломать ===
+
+  getMovies(): Observable<any[]> {
+    return this.getItems();
+  }
+
+  searchMovies(query: string): Observable<any[]> {
+    return this.getItems(query);
+  }
 }
